@@ -1,18 +1,35 @@
 import { cookies } from "next/headers"
 import { prisma } from "@/lib/db"
-import { compare, hash } from "bcrypt"
 import { SignJWT, jwtVerify } from "jose"
 import { redirect } from "next/navigation"
+import { createHash, timingSafeEqual } from "crypto"
 
 const secretKey = process.env.JWT_SECRET || "your-secret-key"
 const key = new TextEncoder().encode(secretKey)
 
+// Simple hash function using Node's crypto instead of bcrypt
 export async function hashPassword(password: string) {
-  return hash(password, 10)
+  const hash = createHash("sha256")
+  hash.update(password)
+  return hash.digest("hex")
 }
 
+// Compare passwords using timing-safe comparison
 export async function comparePasswords(password: string, hashedPassword: string) {
-  return compare(password, hashedPassword)
+  const hashedInput = await hashPassword(password)
+  const inputBuffer = Buffer.from(hashedInput)
+  const storedBuffer = Buffer.from(hashedPassword)
+
+  // Ensure buffers are the same length for timingSafeEqual
+  if (inputBuffer.length !== storedBuffer.length) {
+    return false
+  }
+
+  try {
+    return timingSafeEqual(inputBuffer, storedBuffer)
+  } catch (error) {
+    return false
+  }
 }
 
 export async function createSession(userId: string) {

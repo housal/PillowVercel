@@ -96,17 +96,18 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                   <div className="flex items-center text-sm">
                     <StarIcon className="mr-1 h-4 w-4 fill-current text-yellow-500" />
                     <span>
-                      {averageRating.toFixed(1)} · {property.reviews.length} review{property.reviews.length !== 1 ? 's' : ''}
+                      {averageRating.toFixed(1)} · {property.reviews.length} review
+                      {property.reviews.length !== 1 ? "s" : ""}
                     </span>
                   </div>
                 )}
               </div>
             </div>
-            
+
             <div className="grid gap-2 md:grid-cols-2">
               <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
                 <Image
-                  src={images[0] || '/placeholder.svg?height=300&width=400'}
+                  src={images[0] || "/placeholder.svg?height=300&width=400"}
                   alt={property.title}
                   fill
                   className="object-cover"
@@ -126,7 +127,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                 ))}
               </div>
             </div>
-            
+
             <div className="grid gap-6 md:grid-cols-3">
               {property.capacity && (
                 <div className="flex items-center gap-2">
@@ -151,7 +152,9 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                   <BedIcon className="h-5 w-5 text-muted-foreground" />
                   <div>
                     <p className="text-sm font-medium">Bedrooms</p>
-                    <p className="text-sm text-muted-foreground">{property.bedrooms} bedroom{property.bedrooms !== 1 ? 's' : ''}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {property.bedrooms} bedroom{property.bedrooms !== 1 ? "s" : ""}
+                    </p>
                   </div>
                 </div>
               )}
@@ -160,56 +163,48 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                   <ShowerIcon className="h-5 w-5 text-muted-foreground" />
                   <div>
                     <p className="text-sm font-medium">Bathrooms</p>
-                    <p className="text-sm text-muted-foreground">{property.bathrooms} bathroom{property.bathrooms !== 1 ? 's' : ''}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {property.bathrooms} bathroom{property.bathrooms !== 1 ? "s" : ""}
+                    </p>
                   </div>
                 </div>
               )}
             </div>
-            
+
             <Separator />
-            
+
             <div>
               <h2 className="text-xl font-semibold">About this space</h2>
               <p className="mt-2 whitespace-pre-line">{property.description}</p>
             </div>
-            
+
             {amenities.length > 0 && (
               <>
                 <Separator />
                 <PropertyAmenities amenities={amenities} />
               </>
             )}
-            
+
             {property.availability.length > 0 && (
               <>
                 <Separator />
                 <PropertyAvailability availability={property.availability} />
               </>
             )}
-            
+
             <Separator />
-            
+
             <PropertyHost host={property.user} />
-              />
-              </>
-            )}
-            
-            <Separator />
-            
-            <PropertyHost host={property.user} />
-            
+
             {property.reviews.length > 0 && (
               <>
                 <Separator />
-                <PropertyReviews 
-                  reviews={property.reviews} 
-                  averageRating={averageRating} 
-                />
+                <PropertyReviews reviews={property.reviews} averageRating={averageRating} />
               </>
             )}
           </div>
         </div>
-        
+
         <div className="lg:col-span-1">
           <div className="sticky top-6 space-y-6">
             <div className="rounded-lg border p-4 shadow-sm">
@@ -221,7 +216,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
                   </span>
                 </div>
               </div>
-              
+
               {!isOwner ? (
                 <BookingForm
                   propertyId={property.id}
@@ -241,7 +236,7 @@ export default async function PropertyPage({ params }: PropertyPageProps) {
           </div>
         </div>
       </div>
-  </main>
+    </main>
   )
 }
 
